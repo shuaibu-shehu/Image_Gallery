@@ -1,13 +1,15 @@
 .image-card{
     width: 35%;
     /* height: 200px; */
-    aspect-ratio: calc(2);
+    aspect-ratio: 1;
     position: relative;
+    transition: 0.3s;
 
 }
 .image-card:hover{
     opacity: 0.5;
     cursor: pointer;
+    scale: 1.1;
 }
 img{
     width: 100%;
@@ -15,11 +17,10 @@ img{
 }
 
 .tags{
-    padding: 10px;
     position: absolute;
-    bottom: 0px;
+    bottom: 4px;
     left: 50%;
-    width: 90%;
+    width: 100%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.361);
     color: #fff;
@@ -27,9 +28,7 @@ img{
 }
 
 @media (max-width:640px) {
-    .image-card{
-        /* width: 60%; */
-    }
+  
     .tags{
         font-size: 0.7rem;
     }

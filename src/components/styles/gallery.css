@@ -28,8 +28,9 @@ position: relative;
 }
 
 input{
- width: 100%; ;   
+ width: 100%;  
 }
+
 ion-icon{
     position: absolute;
     font-size: 2rem;
@@ -39,8 +40,12 @@ ion-icon{
     padding: 5px;
     /* right: 4rem; */
     transform: translateY(-50%);
-
 }
+
+ion-icon:hover{
+    cursor: pointer;
+}
+
 .image-grid{
     margin: 0 auto;
     width: 80%;
