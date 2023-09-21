@@ -9,7 +9,7 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Track whether the password is visible or not
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,7 +29,11 @@ function SignIn() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+const handleKeyPressed=(e)=>{
+  if(e.key=='Enter'){
+    login();
+  }
+}
   return (
     <div className='form'>
       <h2>Login</h2>
@@ -47,10 +51,11 @@ function SignIn() {
 
       <div className='input-div'>
         <input
-          type={showPassword ? 'text' : 'password'} // Toggle between 'text' and 'password'
+          type={showPassword ? 'text' : 'password'} 
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyPressed}
         />
         <div onClick={togglePasswordVisibility} className='eye-icon'>
           <ion-icon name={showPassword ? 'eye-off' : 'eye'}></ion-icon>
