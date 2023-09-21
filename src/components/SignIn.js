@@ -46,8 +46,8 @@ function SignIn() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={login}>Login</button>
-      {error && <p>{error}</p>}
-      <p className='error'>Don't have an accout? <Link to='/SignUp'>Register</Link></p>
+      {error && <p className='error'>{error}</p>}
+      <p>Don't have an accout? <Link to='/SignUp'>Register</Link></p>
     </div>
   );
   console.log(email);

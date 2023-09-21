@@ -3,28 +3,44 @@
    background-color:#4d5866 ;
    width: 100%;
    align-items: center;
- 
+  text-align: center;
+  color: #fff;
 }
 
 .header{
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.185);
     color: #fff;
+    border-bottom: 1px solid;
     padding: 15px;
+    text-align: left;
     
 
 }
+.logout{
+    color: #fff;
+    font-size: 2rem;
+}
 
 .search-input-div{
+
+position: relative;
  width: 80%;
- margin: 10px auto;
+ margin: 3rem auto;
 }
 
 input{
  width: 100%; ;   
 }
+ion-icon{
+    position: absolute;
+    font-size: 2rem;
+    top: 50%;
+    color: #2b2828;
+    background-color: #fff;
+    padding: 5px;
+    /* right: 4rem; */
+    transform: translateY(-50%);
 
+}
 .image-grid{
     margin: 0 auto;
     width: 80%;
@@ -34,3 +50,4 @@ input{
     align-items: center;
     gap: 20px;
 }
+

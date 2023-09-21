@@ -2,6 +2,8 @@ import "../components/styles/gallery.css";
 import Image from "./Image";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import SignIn from "./SignIn";
+import { Link } from "react-router-dom";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
@@ -36,17 +38,16 @@ export default function Gallery() {
   return (
     <div className="gallery">
       <div className="header">
-        <h3>
-          Zuri-<small>internship</small>
-        </h3>
-        <h1>Gallery</h1>
+        <Link className="logout" to='/'>Logout</Link>
       </div>
+        <h1>Photo Gallery</h1>
       <div className="search-input-div">
         <input type="search" 
         value={query} 
          onChange={(e)=>setQuery(e.target.value)}
          placeholder="Type description"
          />
+         <ion-icon name="search"></ion-icon>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="images">

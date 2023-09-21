@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./styles/form.css"
 import SignIn from './SignIn';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -10,6 +10,7 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+const navigate = useNavigate()
 
   const register=async ()=>{
     try{
@@ -18,11 +19,12 @@ function SignUp() {
      email,
      password
     )
+    navigate('/gallery');
     setEmail('');
     setPassword('')
-    console.log(user);
+ 
     } catch(error){
-        console.log(error);
+        setError('check your login credentials');
     }
  }
 
@@ -43,7 +45,7 @@ function SignUp() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={register}>SignUp</button>
-      {error && <p>{error}</p>}
+      {error && <p className='error'>{error}</p>}
       <p>Already have an Acoount have an accout? <Link to='/'>SignIn</Link></p>
     </div>
   );
