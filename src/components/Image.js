@@ -1,21 +1,23 @@
-import "../components/styles/image.css"
-import { Draggable } from "react-beautiful-dnd";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import "../components/styles/image.css";
 
-export default function Image(props){
-    
-    return (
-        <Draggable key={props.id.toString()} draggableId={props.id.toString()} index={props.index} >
-            {(provided)=>(
-
-                <div className="image-card"
-                {...provided.draggableProps} 
-                {...provided.dragHandleProps}
-                ref={provided.innerRef}
-                >
-            <img src={props.webformatURL} alt="" />
-            <span className="tags">{props.tags}</span>
-        </div>
-        )}
-        </Draggable>
-    )
+export default function Image(props) {
+const {attributes, listeners, setNodeRef, transform, transition}=useSortable({ id: props.id} )
+const style={
+    transition:`transform 100ms`,
+     transform: CSS.Transform.toString(transform),
+};
+  return (
+    <div 
+    className="image-card"
+    ref={setNodeRef}
+    style={style}
+    {...attributes}
+    {...listeners}
+    >
+      <img src={props.webformatURL} alt="" />
+      <span className="tags">{props.tags}</span>
+    </div>
+  );
 }

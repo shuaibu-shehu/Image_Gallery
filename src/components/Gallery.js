@@ -1,13 +1,14 @@
 import "../components/styles/gallery.css";
 import Image from "./Image";
 import { useState, useEffect } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
-  const [query,setQuery]=useState('');
+  const [query, setQuery] = useState("");
   const getImages = async () => {
     try {
       const key = "39566677-d23c15e26a344e12b1e00cf0a";
@@ -16,7 +17,7 @@ export default function Gallery() {
       );
       const data = await res.json();
       setImages(data.hits);
-      setFinalResult(data.hits)
+    
     } catch (err) {
       console.log(err);
     }
@@ -26,42 +27,44 @@ export default function Gallery() {
   }, [query]);
   console.log(images);
 
-  const [finalResult,setFinalResult]=useState([]);
-
-  function handleOnDragEnd(result){
-  const items= Array.from(finalResult);
-  const [reorderedItem]=items.splice(result.source.index, 1);
-  items.splice(result.destination.index, 0 , reorderedItem)
-  setFinalResult(items);
+  const onDragEnd=(event)=>{
+    const { active, over } = event;
+    if(active.id === over.id ){ return; }
+    setImages((images)=>{
+      const oldIndex=images.findIndex((user)=> user.id === active.id);
+      const newIndex=images.findIndex((user)=> user.id === over.id);
+      return arrayMove(images,oldIndex,newIndex)
+    });
   }
-
   return (
     <div className="gallery">
       <div className="header">
-        <Link className="logout" to='/'>Logout</Link>
+        <Link className="logout" to="/">
+          Logout
+        </Link>
       </div>
-        <h1>Photo Gallery</h1>
+      <h1>Photo Gallery</h1>
       <div className="search-input-div">
-        <input type="search" 
-        value={query} 
-         onChange={(e)=>setQuery(e.target.value)}
-         placeholder="Type description"
-         />
-         <ion-icon name="search"></ion-icon>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Type description"
+        />
+        <ion-icon name="search"></ion-icon>
       </div>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="images">
-            {(provided)=>(
 
-                <div className="image-grid" {...provided.droppableProps} ref={provided.innerRef}>
-            {finalResult.map((image,index) => {
-                return <Image {...image} key={image.id} index={index} />;
-            })}
-            {provided.placeholder}
-          </div>
-  )}
-        </Droppable>
-      </DragDropContext>
+      <div className="image-grid">
+        <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+          <SortableContext items={images} strategy={verticalListSortingStrategy}>
+
+        {images.map((image) => {
+          return <Image {...image} key={image.id} />;
+        })}
+
+        </SortableContext>
+        </DndContext>
+      </div>
     </div>
   );
 }
