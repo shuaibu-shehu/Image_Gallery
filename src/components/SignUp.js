@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './styles/form.css';
-import SignIn from './SignIn';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -9,59 +8,54 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
   const navigate = useNavigate();
 
   const register = async () => {
     try {
+      setIsLoading(true); // Set loading state to true
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/gallery');
       setEmail('');
       setPassword('');
+      console.log(user);
+      console.log('user signed up');
+      navigate('/Gallery');
     } catch (error) {
-      setError('Check your login credentials');
+      setError('Check your registration credentials');
+    } finally {
+      setIsLoading(false); // Set loading state to false regardless of success or failure
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleKeyPressed=(e)=>{
-    if(e.key=='Enter'){
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
       register();
     }
-  }
+  };
 
   return (
     <div className='form'>
       <h2>Sign Up</h2>
-      <div className='input-div'>
-        <label>Email</label>
       <input
         type='email'
         placeholder='Email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        />
-        </div>
-      <label>Password</label>
-      <div className='input-div'>
-        <input
-          type={showPassword ? 'text' : 'password'}
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyPressed}
-        />
-        <div onClick={togglePasswordVisibility} className='eye-icon'>
-          <ion-icon name={showPassword ? 'eye-off' : 'eye'}></ion-icon>
-        </div>
-      </div>
-      <button onClick={register}>SignUp</button>
+      />
+      <input
+        type='password'
+        placeholder='Password'
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={handleKeyPress}
+      />
+      <button onClick={register} disabled={isLoading}>
+        {isLoading ? 'Signing up...' : 'Sign Up'} {/* Display loading text while loading */}
+      </button>
       {error && <p className='error'>{error}</p>}
       <p>
-        Already have an account? <Link to='/'>SignIn</Link>
+        Already have an account? <Link to='/'>Sign In</Link>
       </p>
     </div>
   );

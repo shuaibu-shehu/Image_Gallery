@@ -10,11 +10,13 @@ function SignIn() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const navigate = useNavigate();
 
   const login = async () => {
     try {
+      setIsLoading(true); // Set loading state to true
       const user = await signInWithEmailAndPassword(auth, email, password);
       setEmail('');
       setPassword('');
@@ -23,17 +25,21 @@ function SignIn() {
       navigate('/Gallery');
     } catch (error) {
       setError('Use the correct credentials');
+    } finally {
+      setIsLoading(false); // Set loading state to false regardless of success or failure
     }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-const handleKeyPressed=(e)=>{
-  if(e.key=='Enter'){
-    login();
-  }
-}
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      login();
+    }
+  };
+
   return (
     <div className='form'>
       <h2>Login</h2>
@@ -51,17 +57,19 @@ const handleKeyPressed=(e)=>{
 
       <div className='input-div'>
         <input
-          type={showPassword ? 'text' : 'password'} 
+          type={showPassword ? 'text' : 'password'}
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyPressed}
+          onKeyPress={handleKeyPress}
         />
         <div onClick={togglePasswordVisibility} className='eye-icon'>
           <ion-icon name={showPassword ? 'eye-off' : 'eye'}></ion-icon>
         </div>
       </div>
-      <button onClick={login}>Login</button>
+      <button onClick={login} disabled={isLoading}>
+        {isLoading ? 'Logging in...' : 'Login'} {/* Display loading text while loading */}
+      </button>
       {error && <p className='error'>{error}</p>}
       <p>
         Don't have an account? <Link to='/SignUp'>Register</Link>
