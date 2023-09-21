@@ -1,0 +1,36 @@
+.gallery{
+   min-height: 100vh;
+   background-color:#4d5866 ;
+   width: 100%;
+   align-items: center;
+ 
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.185);
+    color: #fff;
+    padding: 15px;
+    
+
+}
+
+.search-input-div{
+ width: 80%;
+ margin: 10px auto;
+}
+
+input{
+ width: 100%; ;   
+}
+
+.image-grid{
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

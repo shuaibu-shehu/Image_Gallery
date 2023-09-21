@@ -1,0 +1,22 @@
+.form{
+    margin: 0 auto;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+input{
+    padding: 10px;  
+    font-size: 1rem;  
+    outline: none;
+
+}
+button{
+padding: 10px;
+font-size: 1.5rem;
+outline: none;
+background: #484851 ;
+color: #fff;
+cursor: pointer;
+}
