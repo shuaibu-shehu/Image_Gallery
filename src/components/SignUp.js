@@ -51,7 +51,7 @@ function SignUp() {
         onKeyPress={handleKeyPress}
       />
       <button onClick={register} disabled={isLoading}>
-        {isLoading ? 'Signing up...' : 'Sign Up'} {/* Display loading text while loading */}
+        {isLoading ? 'Signing up...' : 'Sign Up'}
       </button>
       {error && <p className='error'>{error}</p>}
       <p>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, arrayMove, rectSortingStrategy, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
@@ -56,7 +56,7 @@ export default function Gallery() {
 
       <div className="image-grid">
         <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-          <SortableContext items={images} strategy={verticalListSortingStrategy}>
+          <SortableContext items={images} strategy={rectSortingStrategy}>
 
         {images.map((image) => {
           return <Image {...image} key={image.id} />;
